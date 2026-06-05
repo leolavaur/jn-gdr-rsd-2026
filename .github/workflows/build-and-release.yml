@@ -1,0 +1,55 @@
+name: Build and Release PDF
+
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+
+      - name: Verify tag matches flake version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          FLAKE_VERSION="$(nix eval --raw .#pdf.version)"
+
+          echo "Tag version: ${TAG_VERSION}"
+          echo "Flake version: ${FLAKE_VERSION}"
+
+          if [ "${TAG_VERSION}" != "${FLAKE_VERSION}" ]; then
+            echo "Version mismatch: tag is v${TAG_VERSION}, flake is ${FLAKE_VERSION}."
+            exit 1
+          fi
+
+      - name: Build PDF with flake
+        run: nix build .#pdf --print-build-logs
+
+      - name: Prepare release artifact
+        run: cp result/slides.pdf slides.pdf
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-pdf
+          path: slides.pdf
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: slides.pdf
