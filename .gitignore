@@ -1,8 +1,11 @@
 _build/
 /*.pdf
+# Created by https://www.toptal.com/developers/gitignore/api/latex,direnv
+# Edit at https://www.toptal.com/developers/gitignore?templates=latex,direnv
 
-# Created by https://www.toptal.com/developers/gitignore/api/latex
-# Edit at https://www.toptal.com/developers/gitignore?templates=latex
+### direnv ###
+.direnv
+.envrc
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
@@ -314,5 +317,5 @@ TSWLatexianTemp*
 # glossaries
 *.glstex
 
-# End of https://www.toptal.com/developers/gitignore/api/latex
+# End of https://www.toptal.com/developers/gitignore/api/latex,direnv
 

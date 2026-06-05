@@ -27,6 +27,7 @@
               latexmk
               beamer
               pgf
+              pgfopts
               moloch
               xetex
               ;
@@ -35,7 +36,7 @@
         rec {
           pdf = pkgs.stdenvNoCC.mkDerivation {
             pname = "slides";
-            version = "0.1.0";
+            version = "0.1.1";
             src = self;
 
             nativeBuildInputs = [ tex ];
@@ -58,5 +59,13 @@
           default = pdf;
         }
       );
+
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = [
+            pkgs.act
+          ];
+        };
+      });
     };
 }
