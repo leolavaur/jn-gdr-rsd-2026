@@ -1,0 +1,61 @@
+\section{Conclusion and Future Work}
+
+\begin{frame}{Conclusion and Future Work}
+  \begin{block}{Summary}
+    
+    \begin{itemize}[<+->]
+      \item FedITN generates \emph{diverse}, \emph{constraint-compliant} network topologies using attack scenarios and a library of \emph{sub-topologies}.
+      \item Preliminary results show a capacity to generate a \emph{wide range of variations}, but face scalability issues due to the number of similar topologies generated. 
+      \item Opens the way to \emph{various research directions}: \textit{real} heterogeneity, collection placement, robustness to drift, topology-dependent models...
+    \end{itemize} 
+  \end{block}
+
+  \pause
+  \begin{block}{Future Work}
+    \begin{itemize}[<+->]
+      \item \emph{Data generation}! Fill the topologies and attack scenarios; handle traffic generation and labeling following the recent works on data quality.
+      \item Design appropriate testing strategies (testing sets).
+      \item Improve constraint definition; optimize the selection and composition algorithms.
+      \item Distance ourselves from the platform dependency generalize the approach.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+{
+\setbeamertemplate{background}{\transparent{1}\includegraphics[width=\paperwidth,height=\paperheight]{assets/backgrounds/background-finger.jpeg}}
+\setbeamercolor{emph}{bg=Orchid}
+\makeatletter
+\snt@colors@dark
+\makeatother
+\begin{frame}[plain]
+  % \begin{exampleblock}{Research erspectives for FedITN}
+  %   \begin{itemize}
+  %     \item How do heterogeneity-resilient FL algorithms perform on independent datasets?
+  %     \item Does the placement of data collection points impact detection performance?
+  %     \item Does independent data improve robustness against data- and concept drift?
+  %     \item What will be the impact on topology-dependent models (\eg, GNNs)?
+  %   \end{itemize}
+  % \end{exampleblock}
+  
+  \centering
+
+  \vfill
+
+  {\Large\bfseries FedITN provides controllable topology generation towards independent and heterogeneous distributed datasets.}\\[2em]
+
+  constraint satisfaction | topology composition | attack scenarios | independent dataset 
+
+  
+  \vfill
+  
+  %\pause
+  {\Huge \emph{Thank you!}}\\
+
+  \vfill
+
+  \large
+  \textit{Want to collaborate?}\\
+  \texttt{leo.lavaur@uni.lu | fabien.autrel@imt-atlantique.fr}
+  \vspace{1em}
+\end{frame}
+}

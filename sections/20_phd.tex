@@ -1,0 +1,53 @@
+\section{Federated Learning for Intrusion Detection}
+
+\begin{frame}{PhD Thesis}
+  \begin{block}{Improving Intrusion Detection in Distributed Systems with Federated Learning}
+    \begin{itemize}
+      \item \alert{\bfseries Goal:} Can federated learning realistically be used to as a mean of collaboration between organizations for intrusion detection?
+      \item Supervised by \textexample{Yann Busnel}, advised by \textexample{Fabien Autrel} and \textexample{Marc-Oliver Pahl}.
+      \item Hosted at IMT Atlantique/IRISA with industry and academic funding (Chair CyberCNI).
+        %\item Defended on October 7\textsuperscript{th}, 2024. Jury: Vincent Nicomette (INSA Toulouse), Anne-Marie Kermarrec (EPFL), Éric Totel (TSP), Sonia Ben Mokhtar (CNRS), Pierre-François Gimenez (Inria), Yann Busnel, Fabien Autrel, and Marc-Oliver Pahl (IMT Atlantique).
+      \item Multiple publications in international journals~\autocite{lavaur_tnsm_2022,lavaur_cose_2025}, conferences~\autocite{lavaur_icdcs_demo_2024,lavaur_radar_2024} and workshops~\autocite{lavaur_ares_bass_2024}, as well as international tutorials~\autocite{lavaur_nof_tuto_2023,lavaur_icdcs_tuto_2024,lavaur_icdcs_tuto_2025} and national venues~\autocite{lavaur_cesar_2022,lavaur_algotel_2025}.
+        % \item Keywords: federated learning, collaborative intrusion detection, machine learning, cybersecurity, distributed systems.
+    \end{itemize}
+  \end{block}
+
+  \tikz[overlay,remember picture]{
+    \node[anchor=south east, xshift=-1em, yshift=.5em] at (current page.south east) {%
+      \raisebox{-0.5\height}{\includegraphics[height=1.2cm]{figures/thesis/logos/cybercni.pdf}}%
+      \hspace{1em}\raisebox{-0.5\height}{\includegraphics[height=1cm]{figures/thesis/logos/imta.png}}%
+      \hspace{.7em}\raisebox{-0.5\height}{\includegraphics[height=1cm]{figures/thesis/logos/irisa.jpg}}%
+    }
+  }
+\end{frame}
+
+\input{sections/phd/21_fids_slr.tex}
+\input{sections/phd/22_metro.tex}
+\input{sections/phd/23_assessment.tex}
+\input{sections/phd/24_radar.tex}
+\input{sections/phd/25_takeaways.tex}
+
+% \begin{frame}[t]{Contributions Summary}
+%   \centering%
+%   \vspace{-.2cm}
+%   \foreach \i in {1,...,9} {%
+%     \includegraphics<\i>[width=1.1\linewidth, center,trim={0 0 0 1.2cm}, clip]{./figures/thesis/intro/metro/\i.pdf}%
+%   }
+%   % \includegraphics<10->[width=1.1\linewidth, center]{./figures/thesis/intro/metro/10.pdf}%
+
+%   % \only<11>{
+%   %   \tikz[overlay, remember picture,
+%   %     shift=(current page.south west),
+%   %     x=(current page.south east),
+%   %     y=(current page.north west)
+%   %   ]{
+%   %     % Optional help grid lines
+%   %     %\draw[step=.1, opacity=0.3, thick, red] (0,0) grid (1,1);
+
+%   %     \node[align=left, anchor=south west] at (.025, .05) {\begin{minipage}{.8\textwidth}
+%   %       \tableofcontents
+%   %     \end{minipage}};
+%   %   }
+%   % }
+
+% \end{frame}

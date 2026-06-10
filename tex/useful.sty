@@ -1,0 +1,123 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{useful}[2025-09-01 v0.1.0 Useful macros]
+% Personnal collection of useful LaTeX macros
+
+% Properly spaced abbreviations
+\RequirePackage{xspace}
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+\def\eg{\textit{e.g}\onedot} \def\Eg{\textit{E.g}\onedot}
+\def\ie{\textit{i.e}\onedot} \def\Ie{\textit{I.e}\onedot}
+\def\cf{\textit{cf}\onedot} \def\Cf{\textit{C.f}\onedot}
+\def\etc{\textit{etc}\onedot} \def\vs{\textit{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{\textit{et al}\onedot}
+
+% Draw.io colors
+\RequirePackage{color}
+\definecolor{drawio/fill-gray}{HTML}{F5F5F5}
+\definecolor{drawio/fill-blue}{HTML}{DAE8FC}
+\definecolor{drawio/fill-green}{HTML}{D5E8D4}
+\definecolor{drawio/fill-orange}{HTML}{FFE6CC}
+\definecolor{drawio/fill-yellow}{HTML}{FFF2CC}
+\definecolor{drawio/fill-red}{HTML}{F8CECC}
+\definecolor{drawio/fill-purple}{HTML}{E1D5E7}
+\definecolor{drawio/border-gray}{HTML}{666666}
+\definecolor{drawio/border-blue}{HTML}{6C8EBF}
+\definecolor{drawio/border-green}{HTML}{82B366}
+\definecolor{drawio/border-orange}{HTML}{D79B00}
+\definecolor{drawio/border-yellow}{HTML}{D6B656}
+\definecolor{drawio/border-red}{HTML}{B85450}
+\definecolor{drawio/border-purple}{HTML}{9673A6}
+
+% Circled numbers with TikZ
+\RequirePackage{tikz}
+\DeclareRobustCommand\circled[2]{%
+  \tikz[baseline=(char.base)]{
+    \node[
+      shape=circle, fill=#1, text=white, font=\sffamily\bfseries,
+      minimum size=\f@size*1.2 pt,
+      inner sep=0pt,
+] (char) {\makebox[0pt][c]{#2}}; }}
+
+% Use example color on text
+\@ifclassloaded{beamer}{%
+  \newcommand{\textexample}[1]{{%
+      \usebeamercolor{example text}%
+      \usebeamerfont{example text}%
+      \textcolor{fg}{#1}%
+  }}%
+}{%
+  \newcommand{\textexample}[1]{#1}%
+}%
+
+% New citation commands for beamer
+\newcommand\blankfootnote[1]{%
+  \let\thefootnote\relax\footnotetext{#1}%
+  \let\thefootnote\svthefootnote%
+}
+
+\@ifclassloaded{beamer}{
+  \@ifpackageloaded{biblatex}{
+    \DefineBibliographyStrings{french}{
+      in = {dans},
+    }
+    % Shared formatting logic used by both \smallfullcite and \footcite
+    \newbibmacro*{fullcite:format}{%
+      \mkbibbrackets{\usebibmacro{cite}}%
+      \setunit{\addnbspace}%
+      \printnames{labelname}%
+      \setunit{\labelnamepunct}%
+      \printfield[citetitle]{title}%
+      \newunit%
+      % Add "in" prefix for proceedings entries
+      \ifboolexpr{
+        test {\ifentrytype{inproceedings}} or
+        test {\ifentrytype{proceedings}}
+      }{\bibstring{in}\addspace}{}%
+      % Venue: shortjournaltitle > journaltitle > series > booktitle
+      \iffieldundef{shortjournaltitle}
+      {\iffieldundef{journaltitle}
+        {\iffieldundef{series}
+          {\printfield{booktitle}}
+        {\printfield{series}}}
+      {\printfield{journaltitle}}}
+      {\printfield{shortjournaltitle}}%
+      \setunit{\addcomma\addspace}%
+      \printfield{year}%
+      \adddot%
+    }
+
+    \DeclareCiteCommand{\smallfullcite}%
+    {\usebibmacro{prenote}}%
+    {\usebibmacro{citeindex}%
+      \usebibmacro{fullcite:format}%
+    }{}{%
+      \usebibmacro{postnote}%
+    }
+
+    \DeclareCiteCommand{\footcite*}%
+    {\usebibmacro{prenote}}%
+    {\usebibmacro{citeindex}%
+      \let\svthefootnote\thefootnote%
+      \let\thefootnote\relax%
+      \footnotetext{\hspace{-0.8em}\hangindent=1.6em\usebibmacro{fullcite:format}}%
+      \let\thefootnote\svthefootnote%
+    }{}%
+    {\usebibmacro{postnote}}
+
+    \DeclareCiteCommand{\footcite}%
+    {\usebibmacro{prenote}}%
+    {\usebibmacro{citeindex}%
+      \mkbibbrackets{\usebibmacro{cite}}%
+      \ifciteseen{}{%
+        \let\svthefootnote\thefootnote%
+        \let\thefootnote\relax%
+        \footnotetext{\hspace{-0.8em}\hangindent=1.6em\usebibmacro{fullcite:format}}%
+        \let\thefootnote\svthefootnote%
+      }%
+    }%
+    {\multicitedelim}%
+    {\usebibmacro{postnote}}
+  }{}
+}{}

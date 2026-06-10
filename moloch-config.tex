@@ -1,0 +1,79 @@
+\usetheme[
+  progressbar=foot,
+  titleformat frame=smallcaps,
+  sectionpage=none,
+  subsectionpage=none,
+  %titlepage style=fancy,
+]{moloch}
+
+% ----------------------------------------
+% Colors and theming
+\definecolor{sntred}{HTML}{d22739}
+\definecolor{sntpurple}{HTML}{64267f}
+\definecolor{sntblue}{HTML}{0e81c2}
+\setbeamercolor{alerted text}{fg=sntblue}
+\setbeamercolor{example text}{fg=sntpurple}
+
+\setbeamercolor{normal text}{bg=white}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamertemplate{page number in head/foot}[appendixframenumber]
+\setbeamertemplate{section}[sections numbered]
+
+% Item indent
+\setlength{\leftmargini}{1.5em}
+
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[
+      leftskip=4pt,%
+      rightskip=4pt,%
+      wd=\textwidth,%
+    ]{footline}%
+    \usebeamercolor[fg]{page number in head/foot}%
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}%
+    \hfill%
+    \usebeamertemplate*{page number in head/foot}%
+    \vskip2pt%
+    \usebeamertemplate*{progress bar in head/foot}%
+  \end{beamercolorbox}%
+}
+
+\makeatletter
+\def\maketitle{%
+  \ifbeamer@inframe
+  \titlepage
+  \else
+  \begingroup
+  \renewcommand\footnoterule{}%
+  \usebackgroundtemplate{\includegraphics[width=\paperwidth]{assets/backgrounds/background-normal}}%
+  \setbeamercolor{normal text}{fg=white}%
+  \frame[plain,noframenumbering]{\titlepage}
+  \endgroup
+  \fi
+}
+\setbeamertemplate{title page}{
+  \null%
+  \vspace{0pt plus 1.618fil}%
+  \vfil%
+  \includegraphics[width=0.1\paperwidth]{assets/logos/SnT_white}\\%
+  \vspace{1ex}%
+  \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+  \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+  \expandafter\ifblank\expandafter{\beamer@andstripped}{}{%
+    \vspace{2ex}%
+    \usebeamertemplate*{author}%
+  }
+  \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+  \ifx\insertdate\@empty\else\vspace{.5ex}\usebeamertemplate*{date}\fi
+  \vspace{0pt plus 1fil}%
+  \null
+  \begin{tikzpicture}[remember picture,overlay,shift={(current page.south east)}]
+    \node[anchor=south east] (snt-ul) {\includegraphics[width=0.22\paperwidth]{assets/logos/SnT_UL_white}};
+    \node[anchor=south east] at (snt-ul.south west) {%
+      \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+    };
+  \end{tikzpicture}
+}
+\makeatother
+
+\AtBeginEnvironment{frame}{\setcounter{footnote}{0}}

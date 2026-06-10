@@ -1,0 +1,115 @@
+\documentclass[tikz]{standalone}
+\usepackage{xcolor}
+\usetikzlibrary{positioning}
+
+\definecolor{frontend}{HTML}{F27C7C}
+\definecolor{product}{HTML}{5CCED1}
+\definecolor{currency}{HTML}{39A4D6}
+\definecolor{recommendation}{HTML}{F1B28D}
+\definecolor{email}{HTML}{7FD8CC}
+\definecolor{parentline}{HTML}{2A8EC2}
+\definecolor{followline}{HTML}{B55A8F}
+
+\begin{document}
+\begin{tikzpicture}[
+	x=1cm,
+	y=1cm,
+	font=\sffamily,
+	service/.style={circle, minimum size=8mm, inner sep=0pt, draw=none},
+	servicelabel/.style={font=\bfseries\tiny, anchor=north west, xshift=2pt, yshift=-2pt},
+	parent/.style={->, >=stealth, line width=0.55pt, color=parentline},
+	follows/.style={->, >=stealth, line width=0.75pt, dashed, color=followline}
+]
+
+% main nodes
+\node[service, fill=frontend, label={[servicelabel]south:A3F9}] (root) at (-1.1,2.3) {};
+
+\node[service, fill=frontend, label={[servicelabel]south:7C4E}] (n1)  at (4.5,0.0)  {};
+\node[service, fill=frontend, label={[servicelabel]south:19B7}] (n2)  at (3.3,0.0)  {};
+\node[service, fill=frontend, label={[servicelabel]south:E8A1}] (n3)  at (2.1,0.0)  {};
+\node[service, fill=frontend, label={[servicelabel]south:4D2F}] (n4)  at (0.9,0.0)  {};
+\node[service, fill=frontend, label={[servicelabel]south:C671}] (n5)  at (-0.3,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:0FAB}] (n6)  at (-1.5,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:B24E}] (n7)  at (-2.7,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:65D0}] (n8)  at (-3.9,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:93CE}] (n9)  at (-5.1,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:2AF6}] (n10) at (-6.3,0.0) {};
+\node[service, fill=frontend, label={[servicelabel]south:D7B3}] (n11) at (-7.5,0.0) {};
+
+% lower branches
+\node[service, fill=product, label={[servicelabel]south:58E1}]        (c1)  at (4.5,-1.7)  {};
+\node[service, fill=currency, label={[servicelabel]south:AC09}]       (c2)  at (3.3,-1.7)  {};
+\node[service, fill=product, label={[servicelabel]south:31D8}]        (c4)  at (0.9,-1.7)  {};
+\node[service, fill=recommendation, label={[servicelabel]south:F4A2}] (c5)  at (-0.3,-1.7) {};
+\node[service, fill=product, label={[servicelabel]south:8BC5}]        (c6)  at (-1.5,-1.7) {};
+\node[service, fill=product, label={[servicelabel]south:C2D7}]        (c7)  at (-2.7,-1.7) {};
+\node[service, fill=product, label={[servicelabel]south:6E0F}]        (c8)  at (-3.9,-1.7) {};
+\node[service, fill=product, label={[servicelabel]south:147A}]        (c9)  at (-5.1,-1.7) {};
+\node[service, fill=product, label={[servicelabel]south:9DF2}]        (c10) at (-6.3,-1.7) {};
+\node[service, fill=recommendation, label={[servicelabel]south:E16B}] (c5b) at (-0.3,-3.2) {};
+\node[service, fill=email, label={[servicelabel]south:73FA}]          (c5c) at (-0.3,-4.7) {};
+
+% root to middle row
+\draw[parent] (root) -- (n1);
+\draw[parent] (root) -- (n2);
+\draw[parent] (root) -- (n3);
+\draw[parent] (root) -- (n4);
+\draw[parent] (root) -- (n5);
+\draw[parent] (root) -- (n6);
+\draw[parent] (root) -- (n7);
+\draw[parent] (root) -- (n8);
+\draw[parent] (root) -- (n9);
+\draw[parent] (root) -- (n10);
+\draw[parent] (root) -- (n11);
+
+% follows chain
+\draw[follows] (n1) -- (n2);
+\draw[follows] (n2) -- (n3);
+\draw[follows] (n3) -- (n4);
+\draw[follows] (n4) -- (n5);
+\draw[follows] (n5) -- (n6);
+\draw[follows] (n6) -- (n7);
+\draw[follows] (n7) -- (n8);
+\draw[follows] (n8) -- (n9);
+\draw[follows] (n9) -- (n10);
+\draw[follows] (n10) -- (n11);
+
+% downward parent relations
+\draw[parent] (n1) -- (c1);
+\draw[parent] (n2) -- (c2);
+\draw[parent] (n4) -- (c4);
+\draw[parent] (n5) -- (c5);
+\draw[parent] (n6) -- (c6);
+\draw[parent] (n7) -- (c7);
+\draw[parent] (n8) -- (c8);
+\draw[parent] (n9) -- (c9);
+\draw[parent] (n10) -- (c10);
+\draw[parent] (c5) -- (c5b);
+\draw[parent] (c5b) -- (c5c);
+
+% relation legend (bottom-left)
+\begin{scope}[shift={(-8,-4.59)}]
+	\draw[fill=white, draw=gray!40, rounded corners=1pt] (0,0) rectangle (3.3,-0.95);
+	\draw[parent] (0.2,-0.28) -- (0.95,-0.28);
+	\node[anchor=west, font=\tiny] at (1.05,-0.28) {Parent Relation};
+	\draw[follows] (0.2,-0.66) -- (0.95,-0.66);
+	\node[anchor=west, font=\tiny] at (1.05,-0.66) {Follows Relation};
+\end{scope}
+
+% service legend (bottom-right)
+\begin{scope}[shift={(1.5,-3.75)}]
+	\draw[fill=white, draw=gray!40, rounded corners=1pt] (0,0) rectangle (4.05,-1.78);
+	\node[circle, fill=frontend, minimum size=2.5mm, inner sep=0pt] at (0.22,-0.22) {};
+	\node[anchor=west, font=\tiny] at (0.43,-0.22) {Frontend Service};
+	\node[circle, fill=product, minimum size=2.5mm, inner sep=0pt] at (0.22,-0.56) {};
+	\node[anchor=west, font=\tiny] at (0.43,-0.56) {Product Catalog Service};
+	\node[circle, fill=currency, minimum size=2.5mm, inner sep=0pt] at (0.22,-0.90) {};
+	\node[anchor=west, font=\tiny] at (0.43,-0.90) {Currency Service};
+	\node[circle, fill=recommendation, minimum size=2.5mm, inner sep=0pt] at (0.22,-1.24) {};
+	\node[anchor=west, font=\tiny] at (0.43,-1.24) {Recommendation Service};
+	\node[circle, fill=email, minimum size=2.5mm, inner sep=0pt] at (0.22,-1.58) {};
+	\node[anchor=west, font=\tiny] at (0.43,-1.58) {Email Service};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

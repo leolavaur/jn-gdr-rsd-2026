@@ -1,0 +1,231 @@
+\subsection{\texorpdfstring{\feditn Generating Independent Datasets}{Generating Independent Datasets}}
+
+\begin{frame}[plain]
+  \subsectionpage
+  
+  \footcite*{lavaur_anubis_2025}
+\end{frame}
+
+{
+  \setbeamertemplate{background}{
+    \begin{tikzpicture}[remember picture,overlay]
+      \node at (current page.south east)[anchor=south east,inner sep=0] {\includegraphics[width=.6\paperwidth]{assets/backgrounds/background-white}};
+    \end{tikzpicture}
+  }
+  \begin{frame}[plain]
+    \centering
+    \huge\itshape
+    What datasets for \alert{distributed} intrusion detection?\\[1em]
+    \pause
+    \normalfont
+    None (:
+  \end{frame}
+}
+
+\begin{frame}{Existing workarounds}
+  \begin{columns}[t]
+    \begin{column}{0.45\textwidth}
+      \centering\large
+      \alert{Partitioning datasets}~\autocite{campos_EvaluatingFederatedLearning_2022}
+    \end{column}
+    \begin{column}{0.1\textwidth}
+      \centering
+      \vs
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering\large
+      \alert{Homogenizing features}~\autocite{popoola_FederatedDeepLearning_2021}
+    \end{column}
+  \end{columns}
+  \pause
+  \begin{columns}[t]
+    \begin{column}{0.45\textwidth}
+      \begin{itemize}
+        \item Risk of correlation across clients and unrealistic data points;
+        \item Requires a deep understanding of the dataset;
+        \item Limited by the diversity of the selected dataset.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.1\textwidth}\end{column}
+    \begin{column}{0.45\textwidth}
+      \pause
+      \begin{itemize}
+        \item Limited by the number of available datasets;
+        \item No control over the data distribution;
+        \item Lack dedicated test set.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+  \footcite*{campos_EvaluatingFederatedLearning_2022,popoola_FederatedDeepLearning_2021}
+
+\end{frame}
+
+
+\begin{frame}{Project definition}
+  \begin{block}{Objective}
+  Design a systematic approach to generate \alert<+>{deployable} network topologies, capable of producing \alert<+>{heterogeneous} and \alert<+>{independent} datasets for evaluating Federated Intrusion Detection Systems (FIDSs).
+  \end{block}
+
+  \pause
+  \begin{block}{Requirements}
+    \begin{itemize}[<+->]
+      \item \alert{diversity} in topologies, attacks and devices to provide heterogeneity;
+      \item approach \alert{realism} in terms of traffic and behaviors;
+      \item \alert{controllable} data distribution across clients;
+      \item data \alert{independence} amongst clients;
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Related work}
+  \begin{columns}[t]
+
+    \onslide<+->
+    \begin{column}{.33\textwidth}
+      \begin{block}{Protocol testing~\autocite{doar_BetterModelGenerating_1996,medina_BRITEApproachUniversal_2001}}
+        \begin{itemize}
+          \item Internet-like topologies, not applicable to enterprise networks;
+          \item focus on structural properties or degree distributions (\eg, power-law).
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \onslide<.(1)->
+    \begin{column}{.33\textwidth}
+      \begin{block}{Usecase or task focused}
+        \begin{itemize}[<+->]
+          \item Declarative topology generation (\eg, \texttt{TopoGen}~\autocite{laurito_TopoGenNetworkTopology_2017} for SDN);
+          \item Layer-based composition for Industrial Control Networks (\eg, \texttt{GENIND}~\autocite{alrumaih_GENINDIndustrialNetwork_2023});
+        \end{itemize}
+      \end{block}
+    \end{column}
+    
+    \onslide<.(1)->
+    \begin{column}{.33\textwidth}
+      \begin{block}{Cyber-ranges}
+        \begin{itemize}[<+->]
+          \item Declarative deployments of scenarios and topologies~\autocite{venkatesan_VulnerVANVulnerableNetwork_2019,yamin_ModelingExecutingCyber_2022};
+          \item Vulnerable environment generation from attack graphs (\eg, \texttt{URSID}~\autocite{besson_URSIDAutomaticallyRefining_2024}).
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \only<1>{\footcite*{doar_BetterModelGenerating_1996,medina_BRITEApproachUniversal_2001}}
+  \only<2>{\footcite*{laurito_TopoGenNetworkTopology_2017}}
+  \only<3>{\footcite*{alrumaih_GENINDIndustrialNetwork_2023}}
+  \only<4>{\footcite*{venkatesan_VulnerVANVulnerableNetwork_2019,yamin_ModelingExecutingCyber_2022}}
+  \only<5>{\footcite*{besson_URSIDAutomaticallyRefining_2024}}  
+
+\end{frame}
+
+\begin{frame}{FedITN Approach Overview}
+  % attack scenarios -> constraints -> compatible subtopologies -> topology trees
+  \centering
+  \includegraphics<1>[width=.9\textwidth]{figures/feditn/approach/overview-1}%
+  \includegraphics<2>[width=.9\textwidth]{figures/feditn/approach/overview-2}%
+\end{frame}
+
+\begin{frame}{Topology composition}
+  \centering
+  \includegraphics[width=.9\textwidth]{figures/feditn/approach/overview-topo}
+\end{frame}
+
+\begin{frame}{Sub-topologies}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{figures/feditn/approach/sub_topology.pdf}
+        \caption{Example of a sub-topology with 2 types of nodes.}
+      \end{figure}
+    \end{column}
+
+    \begin{column}{0.6\textwidth}
+      \begin{block}{Sub-topologies}
+        \begin{itemize}[<+->]
+          \item Reusable building blocks;
+          \item Each sub-topology has a specific role and properties (\eg, services\footnotemark, vulnerabilities);
+          \item the router acts as a gateway between sub-topologies.
+        \end{itemize}
+      \end{block}
+        
+      \pause
+      \begin{block}{Composition}
+        \begin{itemize}[<+->]
+          \item Sub-topologies are connected to form a tree (to avoid cycles);
+          \item automatic routing with OSPF;
+          \item the \texttt{Master} sub-topology contains the Internet gateway, the main DNS server, and DHCP/OSPF services.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \alt<2->{\footnotetext{Available services: \texttt{ldap}, \texttt{dbms}, \texttt{cms}, \texttt{dns}, \texttt{mail}, \texttt{syslog\_server}, \texttt{web}, \texttt{ftp}, \texttt{proxy}, \texttt{cloud\_storage}.}}{\only<1>{\blankfootnote{}}}
+
+\end{frame}
+
+\begin{frame}
+  \begin{figure}
+    \centering
+    \includegraphics[height=\paperheight]{figures/feditn/approach/topology.pdf}
+    \caption{Example of a generated topology with 3 sub-topologies.}
+  \end{figure}
+\end{frame}
+
+      
+
+
+
+\begin{frame}{Attack Scenarios}
+  \centering
+  \includegraphics[width=.9\textwidth]{figures/feditn/approach/overview-attack}
+\end{frame}
+
+\begin{frame}[standout]
+  \foreach \i in {1,2} {%
+    \includegraphics<\i>[height=\paperheight]{figures/feditn/approach/scenario-\i}%
+  }
+\end{frame}
+
+
+\begin{frame}{Constraint Programming}
+  \centering
+  \includegraphics[width=.9\textwidth]{figures/feditn/approach/overview-constraint}
+\end{frame}
+
+\begin{frame}{Problem Formalization}
+\begin{block}{Sub-topology Selection Problem (STSP)}
+  \color<2->{black!30}
+  Let $\mathcal{T} = \{\tau_1, \tau_2, \ldots, \tau_n\}$ be a set of sub-topologies, \textcolor<4>{sntBlue}{$D_\text{service}$ a set of services}, \textcolor<5>{sntBlue}{$A = \{a_1, a_2, \ldots, a_m\}$ a set of attack scenarios}, \textcolor<2>{sntBlue}{$k_\text{min}$ and $k_\text{max}$ the bounds of the number of subtopologies}, and \textcolor<3>{sntBlue}{$\ell_\text{min}$ and $\ell_\text{max}$ the bounds for the total number of nodes}.
+  The STSP consists of finding all sets of sub-topologies $T \subseteq \mathcal{T}$ that satisfy the following:
+  \begin{enumerate}
+    \color<2->{black!30}
+    %\normalfont
+    \item \textcolor<2>{sntBlue}{$k_\text{min} \leq |T|  \leq k_\text{max}$}.
+    \item \textcolor<3>{sntBlue}{$\ell_\text{min} \leq \sum\nolimits_{\tau_k \in T} | N_k| \leq \ell_\text{max}$}.
+    \item \textcolor<4>{sntBlue}{$\forall s \in D_\text{service}, \exists \tau_k \in T, \text{ s.t. } s \in N_k$}.
+    \item \textcolor<5>{sntBlue}{$\forall a \in A, \forall s \in a_{[\texttt{srcs}]}, \exists \tau_k \in T, \text{ s.t. } s \text{ compatible with } \tau_k$}.
+    \item \textcolor<5>{sntBlue}{$\forall a \in A, \forall t \in a_{[\texttt{targets}]}, \exists \tau_k \in T, \text{ s.t. } t \text{ compatible with } \tau_k$}.
+  \end{enumerate}
+\end{block}
+    
+\end{frame}
+
+\begin{frame}{Selection \& Composition}
+  \begin{block}{Solution search}
+    \begin{itemize}[<+->]
+      \item Use of the CP-SAT solver from Google OR-Tools~\footnote{https://developers.google.com/optimization};
+      \item The solver finds all combinations of sub-topologies satisfying the constraints;
+      \item Incompatible services are pruned during the search.
+      \item Trees are generated with backtracking to respect an additional depth constraint.
+    \end{itemize}
+  \end{block}
+
+  \onslide<.>{\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{figures/feditn/approach/trees-3}
+    \caption{Possible tree arrangements for 3 sub-topologies.}
+  \end{figure}}
+
+\end{frame}

@@ -1,50 +1,118 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169,10pt]{beamer}
 
-\usetheme{moloch}
+% ------------------------------------------------
+% PACKAGES AND CONFIG
 
-\title{Basic Beamer Presentation}
-\author{Your Name}
-\institute{Your Institute}
-\date{\today}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{FiraSans,FiraMono} % \usepackage{tgheros}
+
+\usepackage[french,english]{babel}
+\usepackage{csquotes}
+
+\usepackage{booktabs}
+\usepackage{transparent}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[export]{adjustbox}
+\usepackage[symbol]{footmisc}
+
+\usepackage{biblatex}
+\renewcommand\bibfont{\small}
+\DeclareBibliographyCategory{standout}
+\AtDataInput{%
+  \iffieldequalstr{usera}{standout}%
+  {\addtocategory{standout}{\thefield{entrykey}}}%
+  {}%
+}{}
+\DeclareFieldFormat{labelnumber}{%
+  \ifcategory{standout}{\mkbibbold{\textexample{#1}}}{#1}%
+}
+\addbibresource{lavaur.bib}
+\addbibresource{references.bib}
+
+\usepackage[mode=buildnew]{standalone}
+\renewcommand<>{\includestandalone}[2][]{%
+  \only#3{\beameroriginal{\includestandalone}[#1]{#2}}%
+}
+
+\usepackage{caption}
+\captionsetup{font=small}
+
+\usepackage[acronym]{glossaries}
+\glsdisablehyper
+\loadglsentries{glossary}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,trees}
+
+\usepackage[]{minted}
+
+\usepackage{useful}
+% ------------------------------------------------
+% THEME
+\input{moloch-config}
+
+\hypersetup{
+  colorlinks,
+  citecolor=sntblue,
+  linkcolor=.,
+}
+% ------------------------------------------------
+% MACROS
+
+\definecolor{contrib/eiffel}{HTML}{FFE599}
+\definecolor{contrib/radar}{HTML}{F19C99}
+\definecolor{contrib/feditn}{HTML}{B9E0A5}
+\definecolor{contrib/slr}{HTML}{C4D1E3}
+\definecolor{contrib/waterllmarks}{HTML}{ac9cc1}
+\definecolor{contrib/logic}{HTML}{B1DDF0}
+\definecolor{contrib/flb}{HTML}{F8CECC}
+\definecolor{contrib/rag}{HTML}{FFCE99}
+
+\newcommand\slr{\circled{contrib/slr}{S}\xspace}
+\newcommand\eiffel{\circled{contrib/eiffel}{E}\xspace}
+\newcommand\radar{\circled{contrib/radar}{R}\xspace}
+\newcommand\feditn{\circled{contrib/feditn}{F}\xspace}
+\newcommand\waterllmarks{\circled{contrib/waterllmarks}{W}\xspace}
+\newcommand\logic{\circled{contrib/logic}{L}\xspace}
+\newcommand\flb{\circled{contrib/flb}{G}\xspace}
+\newcommand\rag{\circled{contrib/rag}{A}\xspace}
+
+% -----------------------------------------------
+% DOCUMENT
+
+\title{Confidential Collaboration for Reliable Detection in Distributed Systems}
+\author{Léo Lavaur}
+\institute{
+  Interdisciplinary Centre for Security, Reliability and Trust (SnT)\\
+Université du Luxembourg}
+\date{\footnotesize June 10\textsuperscript{th}\kern-0.3em, 2026 $\cdot$
+\foreignlanguage{french}{Journées Nationales du GDR SSI, Lille}}
 
 \begin{document}
 
-\begin{frame}
-  \titlepage
+\maketitle
+
+\input{sections/10_introduction}
+\input{sections/20_phd}
+\input{sections/30_postdoc}
+\input{sections/40_conclusion}
+
+\appendix
+
+\begin{frame}[allowframebreaks]{References}
+  \printbibliography[heading=none]
 \end{frame}
 
-\begin{frame}{Outline}
-  \tableofcontents
-\end{frame}
-
-\section{Introduction}
-
-\begin{frame}{First Slide}
-  \begin{itemize}
-    \item Welcome to Beamer.
-  \end{itemize}
-\end{frame}
-
-\section{Content}
-
-\begin{frame}{Second Slide}
-  Example equation:
-  \[
-    E = mc^2
-  \]
-\end{frame}
-
-\section{Conclusion}
-
-\begin{frame}{Summary}
-  \begin{block}{Key Point}
-    Keep slides simple and readable.
-  \end{block}
-\end{frame}
+\section*{Backup slides}
 
 \begin{frame}
-  \centering
-  \Large Questions?
+  \sectionpage
 \end{frame}
+
+\input{sections/90_appendix}
 
 \end{document}

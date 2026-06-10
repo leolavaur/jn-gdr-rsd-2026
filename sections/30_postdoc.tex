@@ -1,0 +1,110 @@
+\section{\texorpdfstring{\logic Neural-symbolic Integration for Attack Detection}{Neural-symbolic Integration for Attack Detection}}
+
+\input{sections/31_metro-postdoc.tex}
+
+%  1. Définitions/Context : raisonnement symbolique, intégration neuro symbolique
+% - comp type 1/2
+% - interpretability and determinism when needed
+\begin{frame}[t]{Definitions}
+  \begin{block}{Symbolic reasoning}
+    Represents knowledge as explicit symbols (\alert{facts}) and provides \alert{rules} to derive new knowledge or make decisions.
+    \pause
+    Example of rule in First-Order Logic (FOL):
+    \begin{equation*}
+      \forall p,f: \text{IsShellProcess}(p) \land \text{Accesses}(p,f) \land \text{IsSensitiveFile}(f) \rightarrow \text{IsSuspicious}(p).
+    \end{equation*}
+  \end{block}
+
+  \pause
+  \begin{block}{Neural-symbolic integration}
+    Combines symbolic reasoning (interpretability, explicit knowledge representation) with neural networks (learning from data, handling uncertainty). \Eg, DeepProbLog~\footcite{manhaeve_DeepProbLogNeuralProbabilistic_2018}, Scallop~\footcite{li_ScallopLanguageNeurosymbolic_2023}.
+  \end{block}
+\end{frame}
+
+% 2. It all starts from a dataset...
+% - casino limit
+% - our goal, extract relationships between attacks
+\begin{frame}{It all starts from a dataset\dots}
+  \begin{columns}
+    \column{0.5\textwidth}
+
+    \textbf{The CasinoLimit dataset}~\autocite{kilian_CasinoLimitOffensiveDataset_2025}
+    \begin{itemize}
+      \item Controlled CTF exercise played by 114 participants, each on an isolated but identical instance.
+      \item A defined 8-step scenario labeled with MITRE ATT\&CK techniques.
+        \pause
+      \item \alert{Our goal:} extract the scenario from the data, using classification and domain knowledge.
+    \end{itemize}
+
+    \column{0.5\textwidth}
+    \vspace{-.5em}
+    \centering
+    \only<3>{\vspace{-2em}\includegraphics[width=.75\textwidth]{figures/postdoc/nesy/mlp.drawio.pdf}}%
+    \includegraphics<4>[width=1.05\textwidth,center]{figures/postdoc/nesy/confmat}%
+    \vfill
+  \end{columns}
+  \footcite*{kilian_CasinoLimitOffensiveDataset_2025}
+\end{frame}
+
+% 4. Adding contexte (arch neuro sym with animations)
+% - usually in ml we do window (mention lstm/transformer)
+% - logit rerank at inference
+
+\begin{frame}{Adding Context with Symbolic Rules}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{itemize}[<+->]
+      \item Use a rolling window of events to capture context.
+      \item Typically implemented with LSTMs or Transformers.
+      \item Automatically derive rules instead.
+      \item Rerank model outputs at inference time.
+    \end{itemize}
+
+    \column{0.5\textwidth}
+    \centering
+    \includegraphics<1>[height=.95\textheight]{figures/postdoc/nesy/arch-1.drawio.pdf}%
+    \includegraphics<2>[height=.95\textheight]{figures/postdoc/nesy/arch-lstm.drawio.pdf}%
+    \includegraphics<3>[height=.95\textheight]{figures/postdoc/nesy/arch-2.drawio.pdf}%
+    \includegraphics<4>[height=.95\textheight]{figures/postdoc/nesy/arch-4.drawio.pdf}%
+  \end{columns}
+\end{frame}
+
+% 5. Integrating at train time (old figure or new if time)
+\begin{frame}{Different Types of Integration}
+  \centering
+  \includegraphics[width=.6\textwidth]{figures/postdoc/nesy/methodology_overview_cropped.pdf}%
+\end{frame}
+
+% 6. Results
+{\setbeamercovered{transparent}
+  \begin{frame}{Results}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/postdoc/nesy/results.pdf}
+    \vspace{-0.8em}
+    \begin{description}
+        {\only<2>{\transparent{0.3}}%
+      \item[Left:] Macro-F1 across backbones and integration methods: train-time outperforms inference-time, and can match LSTM/Transformer performance with a simple MLP backbone.}
+        {\only<1>{\transparent{0.3}}%
+      \item[Right:] Per-technique $\Delta$F1 versus the corresponding baseline: inference-time correction provide very consistent improvements across techniques.}
+    \end{description}
+  \end{frame}
+}
+% 7. Interests for Collab
+% - inf time adaptation
+% - auditability by interpretability
+% - train smaller models and join With logic
+\begin{frame}{Takeways}
+  \begin{block}{Convincing proof of concept}
+    Can effectively leverage \alert{domain knowledge} to improve performance, particularly with simple backbones.
+  \end{block}
+
+  \pause
+  \begin{block}{Improved auditability}
+    Symbolic rules provide \alert{interpretability} and can be used to audit model decisions.
+  \end{block}
+
+  \pause
+  \begin{block}{Scaling problem}
+    Automatic rule derivation is necessary to scale to more behaviors and scenarios.\pause{} \alert{Derive from provenance graphs?}
+  \end{block}
+\end{frame}

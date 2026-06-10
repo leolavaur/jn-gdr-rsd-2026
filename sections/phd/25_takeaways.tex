@@ -1,0 +1,47 @@
+\subsection{Takeaways on Federated Learning for Intrusion Detection}
+
+% \begin{frame}[b]{Future Work}
+%   \centering%
+%   \vspace{-.3cm}
+%   \foreach \i in {1,...,4} {%
+%     \includegraphics<\i>[width=1.1\textwidth, center]{figures/thesis/conclusion/future/\i.pdf}%
+%   }%
+% \end{frame}
+
+% \begin{frame}[b]{Going beyond FIDSs}
+%   \centering%
+%   % \vspace{-.4cm}
+%   \foreach \i in {1,...,12} {%
+%     \includegraphics<\i>[width=1.05\textwidth, center, trim={0 0 0 10pt}, clip]{figures/thesis/conclusion/beyond/\i.pdf}%
+%   }%
+% \end{frame}
+
+\begin{frame}{Is FL a good fit for collaboration?}
+
+  \begin{block}{Yes it is!}
+    \begin{itemize}
+      \item Can effectively propagate knowledge on attack classes across clients~\footcite{lavaur_icdcs_demo_2024}.
+      \item Specificities of the IDS use case protects it against some forms of poisoning~\eiffel.
+      \item Quality and trust guarantees are possible, at the cost of scalability~\radar.
+    \end{itemize}
+  \end{block}
+
+  \pause
+  \begin{block}{But\dots}
+    \begin{itemize}[<+->]
+      \item Heterogeneity of data and objectives is a major issue~\slr; due to intrusion detection itself (\eg, complex platform-specific attack scenarios, client-specific classification).
+      \item FL lacks \alert{auditability} from both the model and the aggregation process, making deployment in sensitive environments difficult.
+    \end{itemize}
+  \end{block}
+  % \begin{itemize}[<+->]
+  %   \item Federated learning can indeed be used as a mean of collaboration for intrusion detection, but suffers from data- and objectives heterogeneity \slr.
+  %   \item It opens new attack vectors with poisoning, especially in heterogeneous settings, although bigger federation mitigate this risk \eiffel\onslide<+->; quality guarantees are possible in this setting but scale poorly \radar.
+  %   \item Existing results are biased due to the lack of realistic datasets, which constraint-based generation can help mitigate \feditn.
+  %   \item Using logic reasoning over telemetry data can help link events together, but does not scale~\logic, and cannot provide confidential distributed reasoning.
+  % \end{itemize}
+\end{frame}
+
+% \begin{frame}{Focus on Intrusion Detection}
+%   \centering
+%   \includegraphics<+>[width=1.05\textwidth, center, trim={0 0 0 10pt}, clip]{figures/thesis/conclusion/beyond/14.pdf}%
+% \end{frame}

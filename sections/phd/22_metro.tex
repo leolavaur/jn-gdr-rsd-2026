@@ -1,0 +1,69 @@
+% Legend item style for metro map overlay
+\tikzset{legenditem/.style={
+    %fill=white,
+    %draw=gray!30,
+    %rounded corners=2pt,
+    inner ysep=1pt,
+    inner xsep=3pt,
+    %outer sep=0pt,
+    minimum width=12.5em,
+    text width=12.5em,
+    font=\scriptsize,
+    %align=left,
+    anchor=north west
+}}
+\tikzset{largeitem/.style={
+    legenditem,
+    minimum width=20em,
+    text width=20em,
+}}
+\tikzset{citeitem/.style={
+    inner sep=3pt,
+    text width=0.75\textwidth,
+    font=\scriptsize,
+    yshift=2ex,
+}}
+
+\begin{frame}{Contributions overview -- PhD}
+  \begin{tikzpicture}[remember picture, overlay, shift={(current page.south west)}, x=\paperwidth, y=\paperheight]%
+    \node[anchor=south, yshift=-5pt] at (current page.south) {
+      \foreach \i in {1,...,4} {%
+        \includegraphics<+>[height=.95\textheight]{figures/metro/\i.pdf}%
+      }%
+      \includegraphics<5>[height=.95\textheight]{figures/metro/4-transparent.pdf}%
+    };
+
+    \only<1->{
+      \node[legenditem] (legend-0-0) at (0.02,0.28) {\hspace{1.4em}\textbf{CONTRIBUTIONS}};
+    }
+
+    \only<1-4>{
+      \node[legenditem] (legend-1-0) at (legend-0-0.south west) {\slr \texttt{Survey (SLR)}~\autocite{lavaur_tnsm_2022,lavaur_cesar_2022}};
+    }
+    \only<5>{
+      \node[legenditem, opacity=0.3] (legend-1-0) at (legend-0-0.south west) {\slr \texttt{Survey (SLR)}~\autocite{lavaur_tnsm_2022,lavaur_cesar_2022}};
+
+    }
+    \only<1>{\node[citeitem, anchor=south east] at (current page.south east) {\smallfullcite{lavaur_tnsm_2022}};}
+
+    \only<2->{
+      \node[legenditem] (legend-2-0) at (legend-1-0.south west) {\eiffel \texttt{Assessment \& eiffel}~\autocite{lavaur_icdcs_demo_2024,lavaur_ares_bass_2024,lavaur_cose_2025}};
+    }
+    \only<2>{
+    \node[citeitem, anchor=south east] at (current page.south east) {\smallfullcite{lavaur_cose_2025}};}
+
+    \only<3->{
+      \node[legenditem] (legend-3-0) at (legend-2-0.south west) {\radar \texttt{RADAR}~\autocite{lavaur_radar_2024,lavaur_algotel_2025}};
+    }
+    \only<3>{\node[citeitem, anchor=south east] at (current page.south east) {\smallfullcite{lavaur_radar_2024}};}
+
+    \only<4>{
+      \node[legenditem] (legend-4-0) at (legend-3-0.south west) {\feditn \texttt{FedITN}~\autocite{lavaur_anubis_2025}};
+    }
+    \only<5>{
+      \node[legenditem, opacity=0.3] (legend-4-0) at (legend-3-0.south west) {\feditn \texttt{FedITN}~\autocite{lavaur_anubis_2025}};
+    }
+    \only<4>{\node[citeitem, anchor=south east] at (current page.south east) {\smallfullcite{lavaur_anubis_2025}};}
+
+  \end{tikzpicture}%
+\end{frame}
