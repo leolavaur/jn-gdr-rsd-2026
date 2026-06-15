@@ -61,7 +61,7 @@
         rec {
           pdf = pkgs.stdenvNoCC.mkDerivation {
             pname = "slides";
-            version = "0.1.1";
+            version = "1.0.0";
             src = self;
 
             nativeBuildInputs = [ tex ];
