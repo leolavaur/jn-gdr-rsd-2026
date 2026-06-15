@@ -30,6 +30,31 @@
               pgfopts
               moloch
               xetex
+              fira # Provides FiraSans.sty
+              fontaxes
+              csquotes
+              transparent
+              tcolorbox
+              multirow
+              adjustbox
+              footmisc
+              minted
+              tikzfill
+              pdfcol
+              listingsutf8
+              biblatex
+              biber
+              standalone
+              booktabs
+              caption
+              xcolor
+              babel
+              babel-french
+              glossaries
+              tools
+              svn-prov
+              ec
+              cm-super
               ;
           };
         in
@@ -43,15 +68,15 @@
 
             buildPhase = ''
               runHook preBuild
-              mkdir -p build
-              latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
+              mkdir -p _build
+              latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
               runHook postBuild
             '';
 
             installPhase = ''
               runHook preInstall
               mkdir -p $out
-              cp build/main.pdf $out/slides.pdf
+              cp main.pdf $out/slides.pdf
               runHook postInstall
             '';
           };
