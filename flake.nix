@@ -69,7 +69,29 @@
             buildPhase = ''
               runHook preBuild
               mkdir -p _build
-              latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+              latexmk main.tex
+              runHook postBuild
+            '';
+
+            installPhase = ''
+              runHook preInstall
+              mkdir -p $out
+              cp main.pdf $out/slides.pdf
+              runHook postInstall
+            '';
+          };
+
+          pdf-handout = pkgs.stdenvNoCC.mkDerivation {
+            pname = "slides-handout";
+            version = "1.0.0";
+            src = self;
+
+            nativeBuildInputs = [ tex ];
+
+            buildPhase = ''
+              runHook preBuild
+              mkdir -p _build
+              latexmk -pdflatex='pdflatex %O "\\PassOptionsToClass{handout}{beamer}\\input{%S}"' main.tex
               runHook postBuild
             '';
 

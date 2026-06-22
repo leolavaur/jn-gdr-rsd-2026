@@ -1,0 +1,43 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{FiraSans,FiraMono}
+\usepackage[french,english]{babel}
+\usepackage{csquotes}
+
+\usepackage{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{useful}
+\input{moloch-config}
+
+\title{Minimal Presentation Template}
+\author{Your Name}
+\institute{Your Institute}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]{One slide}
+  This is a minimal Beamer template using the \texttt{moloch} theme.
+
+  The \texttt{useful.sty} package provides the \verb|\footcite{...}| command for citations in footnotes.
+
+  Example citation: \footcite{kautz_ThirdAISummerAAAI_2022}.
+\end{frame}
+
+\begin{frame}[fragile]{Another slide}
+  You can also use \verb|\fullcite*{...}| to only print the citation in the footnote, without the reference number in the text. \fullcite*{kautz_ThirdAISummerAAAI_2022}
+
+  \pause
+  This allows you to handle the citation \verb|\footcite{...}| and the reference separately, which can be useful with overlays \autocite{kautz_ThirdAISummerAAAI_2022}.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+  \printbibliography[heading=none]
+\end{frame}
+
+\end{document}
